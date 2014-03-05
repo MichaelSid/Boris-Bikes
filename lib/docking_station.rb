@@ -1,36 +1,16 @@
+#load BikeContainer
+require_relative 'bike_container'
 
 class DockingStation
 
-	DEFAULT_CAPACITY = 10
+	#this gives us all the methods that used to be in this class
+	include BikeContainer
 
 	def initialize(options = {})
-		@capacity = options.fetch(:capacity, DEFAULT_CAPACITY) 
-		#This is a common pattern for passing optional arguments into Ruby. 
-		#The Hash.fetch method retrieves the value for the given key (`options[:capacity]` in this case) and if the key is not found, it returns the second argument (`DEFAULT_CAPACITY`). 
-		#So if the capacity is passed, it's used, otherwise the default one will be assigned.
-		@bikes = []
-	end
-
-	def full?
-		bike_count == @capacity
-	end
-
-	def bike_count
-		@bikes.count
-	end
-
-	def dock(bike)
-		#if the capacity is reached, raise an exception
-		raise "Station is full" if full?
-		@bikes << bike
-	end
-
-	def available_bikes
-		@bikes.reject {|bike| bike.broken? }
-	end
-
-	def release(bike)
-		@bikes.delete(bike)
-	end
+		#self.capacity is calling the capacity=() method
+		#(note the equals sign) defined in BikeContainer
+		#capacity (the second argument to fetch()) is calling the capacity() method in Bike Container
+		self.capacity = options.fetch(:capacity, capacity)
+	end	
 
 end
